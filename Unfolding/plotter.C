@@ -217,12 +217,97 @@ void plotter::draw_output_data(TH1* output_, TH1* stat_, std::vector<TH1D*> trut
   }
   l->SetTextSize(0.04);
   l->Draw();
-  CMSLabel(true);
+  CMSLabel(false);
   LumiInfo();
   c->SaveAs(directory + file_name + ".pdf");
   delete c;
 }
 
+
+// void plotter::draw_output_data_ratio(TH1* output_, TH1* stat_, std::vector<TH1D*> truth_, std::vector<TString> legnames, bool norm, TString file_name){
+//
+//   TH1* output = (TH1*) output_->Clone("output");
+//   TH1* stat = (TH1*) stat_->Clone("stat");
+//
+//   std::vector<TH1D*> truth, truth2;
+//   for(auto t: truth_){
+//     truth.push_back( (TH1D*) t->Clone() );
+//     truth2.push_back( (TH1D*) t->Clone() );
+//   }
+//
+//   TH1F* ratio = GetRatio(output, truth);
+//   TH1F* ratio_mc = GetMCRatioUncert(truth);
+//
+//   double max = output->GetMaximum();
+//   for(auto t: truth){
+//     if(t->GetMaximum() > max) max = t->GetMaximum();
+//   }
+//   double ymax = 1.5 * max;
+//
+//   TCanvas *c = new TCanvas("c","",600,600);
+//   gPad->SetLeftMargin(0.19);
+//   // TGaxis::SetMaxDigits(3);
+//   output->SetTitle(" ");
+//   output->GetYaxis()->SetRangeUser(0., ymax);
+//   output->GetXaxis()->SetTitle("m_{jet} [GeV]");
+//   if(norm) output->GetYaxis()->SetTitle("#frac{1}{#sigma} #frac{d#sigma}{dm_{jet}} [#frac{1}{GeV}]");
+//   else output->GetYaxis()->SetTitle("#frac{d#sigma}{dm_{jet}} [#frac{fb}{GeV}]");
+//   output->GetYaxis()->SetTitleOffset(1.5);
+//   output->GetXaxis()->SetTitleOffset(0.9);
+//   output->GetYaxis()->SetTitleSize(0.05);
+//   output->GetXaxis()->SetTitleSize(0.05);
+//   // output->GetYaxis()->SetLabelSize(0.05);
+//   // output->GetXaxis()->SetLabelSize(0.05);
+//   output->GetYaxis()->SetNdivisions(505);
+//   output->SetLineColor(kBlack);
+//   output->SetMarkerColor(kBlack);
+//   output->SetMarkerStyle(8);
+//   output->SetMarkerSize(1);
+//   output->Draw("E1");
+//   stat->SetLineColor(kBlack);
+//   stat->SetMarkerColor(kBlack);
+//   stat->SetMarkerStyle(8);
+//   stat->SetMarkerSize(1);
+//   gStyle->SetEndErrorSize(5);
+//   Int_t color[] = {TColor::GetColor("#0059b3"), TColor::GetColor("#e67300")};
+//   Int_t fillcolor[] = {TColor::GetColor("#99ccff"), TColor::GetColor("#ff8000")};
+//   // Color_t color[] = {kAzure+2, kOrange+7};
+//   // Color_t fillcolor[] = {kAzure+10, 798};
+//   Int_t style[] = {1, 2};
+//   Int_t fillstyle[] = {3144, 3153};
+//
+//   for(unsigned int i=0; i<truth.size(); i++){
+//     truth[i]->SetLineWidth(3);
+//     truth[i]->SetLineColor(color[i]);
+//     truth[i]->SetLineStyle(style[i]);
+//     truth[i]->SetMarkerStyle(0);
+//     truth[i]->SetFillColor(fillcolor[i]);
+//     // truth[i]->SetFillStyle(fillstyle[i]);
+//     if(i==0) truth[i]->Draw("E2 SAME");
+//     truth2[i]->SetLineWidth(3);
+//     truth2[i]->SetLineColor(color[i]);
+//     truth2[i]->SetLineStyle(style[i]);
+//     truth2[i]->Draw("HIST SAME");
+//   }
+//   stat->Draw("E1 SAME");
+//   output->Draw("E1 SAME");
+//
+//   TLegend *l=new TLegend(0.56,0.65,0.78,0.85);
+//   l->SetBorderSize(0);
+//   l->SetFillStyle(0);
+//   l->AddEntry(output,"Data","ple");
+//   for(unsigned int i=0; i<truth.size(); i++){
+//     // l->AddEntry(truth[i],legnames[i],"l");
+//     if(i==0) l->AddEntry(truth[i],legnames[i],"fl");
+//     else     l->AddEntry(truth[i],legnames[i],"l");
+//   }
+//   l->SetTextSize(0.04);
+//   l->Draw();
+//   CMSLabel(true);
+//   LumiInfo();
+//   c->SaveAs(directory + file_name + ".pdf");
+//   delete c;
+// }
 
 /*
 ██████  ██    ██ ████████ ██████  ██    ██ ████████     ███████ ███    ███ ███████  █████  ██████
@@ -472,7 +557,7 @@ void plotter::draw_output_mass(TH1* output_,  TH1* stat_, std::vector<TH1D*> mto
   if(show[14])l->AddEntry(mtop_templates[14],"m_{t} = 178.5 GeV","fl");
   l->SetTextSize(0.04);
   l->Draw();
-  CMSLabel(true);
+  CMSLabel(false);
   LumiInfo();
   c->SaveAs(directory + file_name + ".pdf");
   delete c;
@@ -825,7 +910,7 @@ void plotter::draw_delta_rel(TH1* hist_, TH1* result_, TString file_name){
   gPad->SetLeftMargin(0.15);
   hist->SetTitle(file_name);
   hist->GetXaxis()->SetTitle("m_{jet} [GeV]");
-  hist->GetYaxis()->SetTitle("relative uncertainty [%]");
+  hist->GetYaxis()->SetTitle("Relative Uncertainty [%]");
   hist->GetYaxis()->SetRangeUser(-50, 50);
   hist->GetYaxis()->SetTitleOffset(1.5);
   hist->GetYaxis()->SetNdivisions(505);
@@ -880,8 +965,8 @@ void plotter::draw_delta_comparison( TH1* total_, TH1* stat_, std::vector<TH1*> 
   gPad->SetLeftMargin(0.15);
   gPad->SetBottomMargin(0.14);
   total->SetTitle("");
-  total->GetXaxis()->SetTitle("m_{jet} [GeV]");
-  total->GetYaxis()->SetTitle("relative uncertainty [%]");
+  total->GetXaxis()->SetTitle("#it{m}_{jet} [GeV]");
+  total->GetYaxis()->SetTitle("Relative Uncertainty [%]");
   total->GetYaxis()->SetTitleOffset(1.5);
   total->GetXaxis()->SetTitleOffset(1.1);
   total->GetYaxis()->SetTitleSize(0.05);
@@ -953,6 +1038,8 @@ void plotter::draw_delta_comparison( TH1* total_, TH1* stat_, std::vector<TH1*> 
   }
   leg->Draw();
 
+  LumiInfo();
+
   gPad->RedrawAxis();
   c->SaveAs(directory + file_name + ".pdf");
   delete c;
@@ -1001,8 +1088,8 @@ void plotter::draw_delta_comparison_model( TH1* total_, TH1* stat_, std::vector<
   gPad->SetLeftMargin(0.15);
   gPad->SetBottomMargin(0.14);
   total->SetTitle("");
-  total->GetXaxis()->SetTitle("m_{jet} [GeV]");
-  total->GetYaxis()->SetTitle("relative uncertainty [%]");
+  total->GetXaxis()->SetTitle("#it{m}_{jet} [GeV]");
+  total->GetYaxis()->SetTitle("Relative Uncertainty [%]");
   total->GetYaxis()->SetTitleOffset(1.5);
   total->GetXaxis()->SetTitleOffset(1.1);
   total->GetYaxis()->SetTitleSize(0.05);
@@ -1050,6 +1137,8 @@ void plotter::draw_delta_comparison_model( TH1* total_, TH1* stat_, std::vector<
     else                                    leg->AddEntry(delta[i],UncertNames[i],"l");
   }
   leg->Draw();
+
+  LumiInfo();
 
   gPad->RedrawAxis();
   c->SaveAs(directory + file_name + ".pdf");
@@ -1376,19 +1465,19 @@ void plotter::CMSLabel(bool prelim, double x, double y){
   text->SetTextAlign(13);
   text->SetX(x);
   text->SetTextFont(62);
-  text->SetTextSize(0.07);
+  text->SetTextSize(0.06); //0.07
   text->SetY(y);
   text->Draw();
 
   if(prelim){
-    TString simtext = "Preliminary";
+    TString simtext = "Supplementary";
     TLatex *text3 = new TLatex(3.5, 24, simtext);
     text3->SetNDC();
     text3->SetTextAlign(13);
     text3->SetX(x);
     text3->SetTextFont(52);
-    text3->SetTextSize(0.05);
-    text3->SetY(y-0.06);
+    text3->SetTextSize(0.04); //0.05
+    text3->SetY(y-0.05); // 0.06
     text3->Draw();
   }
 }
@@ -1404,4 +1493,40 @@ void plotter::LumiInfo(){
   text1->SetX(0.90);
   text1->SetY(0.945);
   text1->Draw();
+}
+
+
+TH1F* plotter::GetRatio(TH1F* h1, TH1F* h2){
+  TH1F* ratio = (TH1F*) h1->Clone();
+  int Nbins = h1->GetSize() - 2;
+  for(int i=1; i<=Nbins;i++){
+    double N1 = h1->GetBinContent(i);
+    double N2 = h2->GetBinContent(i);
+    double E1 = h1->GetBinError(i);
+    double E2 = h2->GetBinError(i);
+    if(N1==0 || N2==0){
+      ratio->SetBinContent(i, 1);
+      ratio->SetBinError(i, 0);
+    }
+    else{
+      double r = N1/N2;
+      double error = sqrt(E1/N2 * E1/N2 + N1*E2/(N2*N2) * N1*E2/(N2*N2));
+      ratio->SetBinContent(i, r);
+      ratio->SetBinError(i, error);
+    }
+  }
+  return ratio;
+}
+
+TH1F* plotter::GetMCRatioUncert(TH1F* mc){
+  TH1F* mc_uncert = (TH1F*) mc->Clone();
+  int Nbins = mc->GetSize() - 2;
+  for(int i=1; i<=Nbins;i++){
+    mc_uncert->SetBinContent(i, 1.0);
+    double central = mc->GetBinContent(i);
+    double error = mc->GetBinError(i);
+    double error_ratio = error/central;
+    mc_uncert->SetBinError(i, error_ratio);
+  }
+  return mc_uncert;
 }

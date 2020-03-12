@@ -51,6 +51,8 @@ int main(int argc, char* argv[])
   MASS20 = {112, 132, 152, 172, 192, 232}; // original binning
   MASS = {112, 132, 142, 152, 162, 172, 192, 232, 312, 392};
 
+  // std::vector<Double_t> MERGED = {-0.5, 0.5, 1.5}; // bins of true and false
+
 
   std::vector<Double_t> MASS_MASSMIGRATION;
   MASS_MASSMIGRATION = {50, 75, 85, 95, 105, 120, 135, 150, 165, 180, 195, 210, 225, 240, 270, 300};
@@ -76,6 +78,7 @@ int main(int argc, char* argv[])
   int N_BINS_GEN_MASS_PTMIGRATION = MASS_PTMIGRATION.size() - 1;
   int N_BINS_GEN_MASS_SUBPTMIGRATION = MASS_SUBPTMIGRATION.size() - 1;
   int N_BINS_GEN_MASS_LEPTONPTMIGRATION = MASS_LEPTONPTMIGRATION.size() - 1;
+  // int N_BINS_GEN_MERGED = MERGED.size() - 1;
 
   // 3. create arrays from vectors arrays with correct size
   Double_t *BINS_GEN_MASS = MASS.data();
@@ -86,6 +89,7 @@ int main(int argc, char* argv[])
   Double_t *BINS_GEN_MASS_MASSMIGRATION = MASS_MASSMIGRATION.data();
   Double_t *BINS_GEN_MASS_SUBPTMIGRATION = MASS_SUBPTMIGRATION.data();
   Double_t *BINS_GEN_MASS_LEPTONPTMIGRATION = MASS_LEPTONPTMIGRATION.data();
+  // Double_t *BINS_GEN_MERGED = MERGED.data();
 
 
   // =======================================================================================================
@@ -172,6 +176,10 @@ int main(int argc, char* argv[])
                                 false, // no underflow bin
                                 false // overflow bin
                                 );
+  // measurement_gen->AddAxis("merged",N_BINS_GEN_MERGED,BINS_GEN_MERGED,
+  //                               false, // no underflow bin
+  //                               false // overflow bin
+  //                               );
   //
   // define sideband: migration from lower pt region
   //

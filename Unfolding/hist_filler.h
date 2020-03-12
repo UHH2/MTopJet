@@ -73,6 +73,7 @@ Bool_t passed_massmigration_rec, passed_massmigration_gen;
 Bool_t passed_btagmigration_rec;
 Double_t gen_weight, rec_weight, gen_ttfactor; //weights
 Double_t gen_2width_factor, gen_4width_factor, gen_8width_factor; //factor to change width
+Bool_t merged;
 
 // b quark pt
 vector<double> *pt_b = new vector<double>(2);

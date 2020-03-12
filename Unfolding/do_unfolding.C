@@ -1583,6 +1583,12 @@ int main(int argc, char* argv[])
   plot->draw_stability(h_stb_samebin, h_stb_all, "Stability");
 
   data_unfolded_norm->Write("Unfold_norm_totuncert");
+  data_unfolded_stat_norm->Write("Unfold_norm_statuncert");
+
+  for(auto hist: mc_mtop_templates_norm){
+    TString name = hist->GetTitle();
+    hist->Write(name+"_norm");
+  }
 
   vector<TH1D*> truth = {hist_mc_truth, h_pseudodata_truth};
   vector<TH1D*> truth_norm = {hist_mc_truth_norm, h_pseudodata_truth_norm};
@@ -1610,6 +1616,10 @@ int main(int argc, char* argv[])
   vector<double> xsdataModel = GetTotalCrossSection(data_crosssection, CovModel_xs);
   vector<double> xsdataSys = GetTotalCrossSection(data_crosssection, CovSys_xs);
   vector<double> xsdataTotal = GetTotalCrossSection(data_crosssection, CovTotal_xs);
+
+  truth_crosssection[0]->Write("Truth_XS");
+  truth_crosssection_error[0]->Write("Truth_XS_error");
+  truth_crosssection[1]->Write("Truth2_XS");
 
   CovTotal_xs->Write("CovTotalXS");
 

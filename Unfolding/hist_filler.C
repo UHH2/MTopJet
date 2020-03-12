@@ -359,6 +359,7 @@ void fill_template(TTree* tree, TString mtop){
   tree->SetBranchAddress("Mass_Gen33",&massGen);
   tree->SetBranchAddress("Pt_Rec",&ptRec);
   tree->SetBranchAddress("Pt_Gen33",&ptGen);
+  // tree->SetBranchAddress("matched",&merged);
   tree->SetBranchAddress("passed_measurement_rec",&passed_measurement_rec);
   tree->SetBranchAddress("passed_measurement_gen",&passed_measurement_gen);
   tree->SetBranchAddress("is_TTbar",&is_TTbar);
@@ -515,6 +516,7 @@ void fill_matrix(TTree* tree, TString prefix){
   tree->SetBranchAddress("Mass_Gen33",&massGen);
   tree->SetBranchAddress("Pt_Rec",&ptRec);
   tree->SetBranchAddress("Pt_Gen33",&ptGen);
+  // tree->SetBranchAddress("matched",&merged);
   tree->SetBranchAddress("passed_measurement_rec",&passed_measurement_rec);
   tree->SetBranchAddress("passed_measurement_gen",&passed_measurement_gen);
   tree->SetBranchAddress("is_TTbar",&is_TTbar);
@@ -654,6 +656,7 @@ void fill_modelsys(TTree* tree, TString prefix){
   tree->SetBranchAddress("Mass_Gen33",&massGen);
   tree->SetBranchAddress("Pt_Rec",&ptRec);
   tree->SetBranchAddress("Pt_Gen33",&ptGen);
+  // tree->SetBranchAddress("matched",&merged);
   tree->SetBranchAddress("passed_measurement_rec",&passed_measurement_rec);
   tree->SetBranchAddress("passed_measurement_gen",&passed_measurement_gen);
   tree->SetBranchAddress("is_TTbar",&is_TTbar);
@@ -783,6 +786,7 @@ void fill_pdf(TTree* tree){
   tree->SetBranchAddress("Mass_Gen33",&massGen);
   tree->SetBranchAddress("Pt_Rec",&ptRec);
   tree->SetBranchAddress("Pt_Gen33",&ptGen);
+  // tree->SetBranchAddress("matched",&merged);
   tree->SetBranchAddress("passed_measurement_rec",&passed_measurement_rec);
   tree->SetBranchAddress("passed_measurement_gen",&passed_measurement_gen);
   tree->SetBranchAddress("is_TTbar",&is_TTbar);
@@ -881,6 +885,7 @@ void fill_breweight(TTree* tree, TString prefix){
   tree->SetBranchAddress("Mass_Gen33",&massGen);
   tree->SetBranchAddress("Pt_Rec",&ptRec);
   tree->SetBranchAddress("Pt_Gen33",&ptGen);
+  // tree->SetBranchAddress("matched",&merged);
   tree->SetBranchAddress("passed_measurement_rec",&passed_measurement_rec);
   tree->SetBranchAddress("passed_measurement_gen",&passed_measurement_gen);
   tree->SetBranchAddress("is_TTbar",&is_TTbar);

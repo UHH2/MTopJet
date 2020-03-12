@@ -53,5 +53,7 @@ class plotter{
   TString directory;
   void CMSLabel(bool, double x=0.25, double y=0.83);
   void LumiInfo();
+  TH1F* GetRatio(TH1F* h1, TH1F* h2);
+  TH1F* GetMCRatioUncert(TH1F* mc);
 
 };
