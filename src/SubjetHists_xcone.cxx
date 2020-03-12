@@ -3,15 +3,19 @@
 
 SubjetHists_xcone::SubjetHists_xcone(uhh2::Context & ctx, const std::string & dirname, const std::string & type): Hists(ctx, dirname){
   // book all histograms here
-  pt_had_subjets = book<TH1F>("pt_had_subjets", "p_{T}^{had subjets}", 50, 0, 500);
-  pt_had_subjets_fine = book<TH1F>("pt_had_subjets_fine", "p_{T}^{had subjets}", 100, 0, 500);
-  pt_had_subjet1_fine = book<TH1F>("pt_had_subjet1_fine", "p_{T}^{1st had subjet}", 100, 0, 500);
-  pt_had_subjet2_fine = book<TH1F>("pt_had_subjet2_fine", "p_{T}^{2nd had subjet}", 100, 0, 500);
-  pt_had_subjet3_fine = book<TH1F>("pt_had_subjet3_fine", "p_{T}^{3rd had subjet}", 100, 0, 500);
-  pt_had_subjet1 = book<TH1F>("pt_had_subjet1", "p_{T}^{1st had subjet}", 50, 0, 500);
-  pt_had_subjet2 = book<TH1F>("pt_had_subjet2", "p_{T}^{2nd had subjet}", 50, 0, 500);
-  pt_had_subjet3 = book<TH1F>("pt_had_subjet3", "p_{T}^{3rd had subjet}", 50, 0, 500);
-  eta_had_subjets = book<TH1F>("eta_had_subjets", "#eta^{had subjets}", 100, -5, 5);
+  pt_had_subjets = book<TH1F>("pt_had_subjets", "p_{T}^{had subjets}", 70, 0, 700);
+  pt_had_subjets_fine = book<TH1F>("pt_had_subjets_fine", "p_{T}^{had subjets}", 140, 0, 700);
+  pt_had_subjet1_fine = book<TH1F>("pt_had_subjet1_fine", "p_{T}^{1st had subjet}", 140, 0, 700);
+  pt_had_subjet2_fine = book<TH1F>("pt_had_subjet2_fine", "p_{T}^{2nd had subjet}", 140, 0, 700);
+  pt_had_subjet3_fine = book<TH1F>("pt_had_subjet3_fine", "p_{T}^{3rd had subjet}", 140, 0, 700);
+  pt_had_subjet1 = book<TH1F>("pt_had_subjet1", "p_{T}^{1st had subjet}", 70, 0, 700);
+  pt_had_subjet2 = book<TH1F>("pt_had_subjet2", "p_{T}^{2nd had subjet}", 70, 0, 700);
+  pt_had_subjet3 = book<TH1F>("pt_had_subjet3", "p_{T}^{3rd had subjet}", 70, 0, 700);
+  eta_had_subjets = book<TH1F>("eta_had_subjets", "#eta^{had subjets}", 100, -3, 3);
+  eta_had_subjet1 = book<TH1F>("eta_had_subjet1", "#eta^{1st subjet}", 100, -3, 3);
+  eta_had_subjet2 = book<TH1F>("eta_had_subjet2", "#eta^{2nd subjet}", 100, -3, 3);
+  eta_had_subjet3 = book<TH1F>("eta_had_subjet3", "#eta^{3rd subjet}", 100, -3, 3);
+
   eta_abs_had_subjets = book<TH1F>("eta_abs_had_subjets", "#eta^{had subjets}", 100, -5, 5);
   area_had_subjets = book<TH1F>("area_had_subjets", "jet area (had subjets)", 100, 0, 2);
   area_had1_subjet = book<TH1F>("area_had1_subjet", "jet area (had subjet 1)", 100, 0, 2);
@@ -98,6 +102,10 @@ SubjetHists_xcone::SubjetHists_xcone(uhh2::Context & ctx, const std::string & di
   JEC_L2L3_ak4 = book<TH1F>("JEC_L2L3_ak4", "JEC factor L2L3", 100, 0, 2);
   AreaVsPT_ak4 = book<TH2F>("AreaVsPT_ak4", "x=p_{T}^{all ak4} y=Area", 100, 0, 500, 100, 0, 0.7);
 
+  dR_to_fatjet = book<TH1F>("dR_to_fatjet", "#Delta R(subjet, fatjet)", 70, 0, 1.4);
+  dRmax_subjets = book<TH1F>("dRmax_subjets", "max #Delta R(subjet_{i}, subjet_{j})", 100, 0, 3);
+
+
   // handle for jets
   if(type == "raw") h_recfatjets=ctx.get_handle<std::vector<TopJet>>("xconeCHS_noJEC");
   else if(type == "jec") h_recfatjets=ctx.get_handle<std::vector<TopJet>>("xconeCHS");
@@ -127,6 +135,7 @@ void SubjetHists_xcone::fill(const Event & event){
   // std::vector<Jet> ak4_jets = event.jets;
 
   std::vector<Jet> had_subjets, lep_subjets;
+  TopJet had_fatjet;
   Particle lepton;
   if(event.muons->size() > 0 && event.electrons->size() > 0){
     return;
@@ -144,10 +153,12 @@ void SubjetHists_xcone::fill(const Event & event){
   if(dR1 > dR2){
     had_subjets = rec_fatjets.at(0).subjets();
     lep_subjets = rec_fatjets.at(1).subjets();
+    had_fatjet = rec_fatjets.at(0);
   }
   else if(dR1 < dR2){
     lep_subjets = rec_fatjets.at(0).subjets();
     had_subjets = rec_fatjets.at(1).subjets();
+    had_fatjet = rec_fatjets.at(1);
   }
   if(had_subjets.size() != 3) return;
   if(lep_subjets.size() != 3) return;
@@ -298,6 +309,9 @@ void SubjetHists_xcone::fill(const Event & event){
   pt_had_subjet1->Fill(had_subjets.at(0).pt(), weight);
   pt_had_subjet2->Fill(had_subjets.at(1).pt(), weight);
   pt_had_subjet3->Fill(had_subjets.at(2).pt(), weight);
+  eta_had_subjet1->Fill(had_subjets.at(0).eta(), weight);
+  eta_had_subjet2->Fill(had_subjets.at(1).eta(), weight);
+  eta_had_subjet3->Fill(had_subjets.at(2).eta(), weight);
   for(unsigned int i=0; i<had_subjets.size(); i++){
     pt_had_subjets->Fill(had_subjets.at(i).pt(), weight);
     pt_had_subjets_fine->Fill(had_subjets.at(i).pt(), weight);
@@ -310,7 +324,7 @@ void SubjetHists_xcone::fill(const Event & event){
     JEC_factor = 1./(had_subjets.at(i).JEC_factor_raw());
     JEC_L1factor = had_subjets.at(i).JEC_L1factor_raw();
     AreaVsPT->Fill(had_subjets.at(i).pt(), had_subjets.at(i).jetArea(), weight);
-
+    dR_to_fatjet->Fill(deltaR(had_subjets.at(i), had_fatjet), weight);
     JEC_all_subjets->Fill(JEC_factor, weight);
     JEC_L1_all_subjets->Fill(JEC_L1factor, weight);
     JEC_L2L3_all_subjets->Fill(JEC_factor/JEC_L1factor, weight);
@@ -390,6 +404,16 @@ void SubjetHists_xcone::fill(const Event & event){
       }
       match_to_subjet->Fill(index_match, weight);
     }
+  }
+
+
+  double dRmax = 0;
+  if(had_subjets.size() > 1){
+    for(unsigned int i=1; i< had_subjets.size(); i++){
+      double dR = deltaR(had_subjets[i-1], had_subjets[i]);
+      if(dR > dRmax) dRmax = dR;
+    }
+    dRmax_subjets->Fill(dRmax, weight);
   }
   //---------------------------------------------------------------------------------------
   //---------------------------------------------------------------------------------------

@@ -10,6 +10,12 @@
 using namespace std;
 using namespace uhh2;
 
+// maybe define new JERFiles for every uncertainty source?
+// then UncertSource Files would have to be split
+// How to construct JetCorrectionUncertainty Class with UncertaintySources:
+// JetCorrectionUncertainty *total = new JetCorrectionUncertainty(*(new JetCorrectorParameters("Summer13_V4_DATA_UncertaintySources_AK5PFchs.txt", "Total")));
+
+
 
 // JEC_factor_raw has to be set to a non 0 value for JEC
 std::vector<TopJet> set_JEC_factor(std::vector<TopJet> jets){
@@ -136,3 +142,30 @@ bool JER_Smearer_xcone::process(uhh2::Event & event){
 
   return true;
 }
+
+
+
+// -----------------------------------------------------------------------------
+/*
+GenericSubJetCorrector::GenericSubJetCorrector(uhh2::Context & ctx, const std::vector<std::string> & filenames, const std::string & collectionname){
+  corrector = build_corrector(filenames);
+  direction = 0;
+  // string file = "/nfs/dust/cms/user/schwarzd/CMSSW_8_0_24_patch1/src/UHH2/JECDatabase/textFiles/Summer16_23Sep2016V4_MC/Summer16_23Sep2016V4_MC_UncertaintySources_AK4PFchs.txt"
+  // JetCorrectionUncertainty *total = new JetCorrectionUncertainty(*(new JetCorrectorParameters("Summer13_V4_DATA_UncertaintySources_AK5PFchs.txt", "Total")));
+  jec_uncertainty = corrector_uncertainty(ctx, filenames, direction);
+  h_jets = ctx.get_handle<std::vector<TopJet> >(collectionname);
+}
+
+bool GenericSubJetCorrector::process(uhh2::Event & event){
+  const auto topjets = &event.get(h_jets);
+  assert(topjets);
+  for(auto & topjet : *topjets){
+    auto subjets = topjet.subjets();
+    for (auto & subjet : subjets) {
+      correct_jet(*corrector, subjet, event, jec_uncertainty, direction);
+    }
+    topjet.set_subjets(move(subjets));
+  }
+  return true;
+}
+*/

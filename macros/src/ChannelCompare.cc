@@ -12,7 +12,6 @@ TGraphAsymmErrors* ConvertToGraph(TH1F*, TString);
 ██      ██ ██   ██ ██ ██   ████
 */
 
-
 int main(int argc, char* argv[]){
   TFile* f_elec = new TFile("/nfs/dust/cms/user/schwarzd/CMSSW_8_0_24_patch1/src/UHH2/MTopJet/Unfolding/Results_data_elec.root");
   TFile* f_muon = new TFile("/nfs/dust/cms/user/schwarzd/CMSSW_8_0_24_patch1/src/UHH2/MTopJet/Unfolding/Results_data_muon.root");
@@ -43,8 +42,8 @@ void Plot(TGraphAsymmErrors* elec, TGraphAsymmErrors* elec_stat, TGraphAsymmErro
   elec->SetTitle(" ");
   elec->GetXaxis()->SetRangeUser(112, 232);
   elec->GetYaxis()->SetRangeUser(0, 11);
-  elec->GetXaxis()->SetTitle("m_{jet} [GeV]");
-  elec->GetYaxis()->SetTitle("#frac{d#sigma}{dm_{jet}} [#frac{fb}{GeV}]");
+  elec->GetXaxis()->SetTitle("#it{m}_{jet} [GeV]");
+  elec->GetYaxis()->SetTitle("#frac{d#sigma}{d#it{m}_{jet}} [#frac{fb}{GeV}]");
   elec->GetYaxis()->SetTitleOffset(1.1);
   elec->GetXaxis()->SetTitleOffset(0.9);
   elec->GetYaxis()->SetTitleSize(0.05);
@@ -80,11 +79,21 @@ void Plot(TGraphAsymmErrors* elec, TGraphAsymmErrors* elec_stat, TGraphAsymmErro
 
   CMSLabel(true, 0.2, 0.85);
 
+  TString infotext = "35.9 fb^{-1} (13 TeV)";
+  TLatex *text1 = new TLatex(3.5, 24, infotext);
+  text1->SetNDC();
+  text1->SetTextAlign(33);
+  text1->SetTextFont(42);
+  text1->SetX(0.9);
+  text1->SetY(0.941);
+  text1->SetTextSize(0.04);
+  text1->Draw();
+
   TLegend *l=new TLegend(0.55,0.68,0.85,0.87);
   l->SetBorderSize(0);
   l->SetFillStyle(0);
-  l->AddEntry(elec,"elec channel","pf");
-  l->AddEntry(muon,"muon channel","pe");
+  l->AddEntry(elec,"Electron channel","pf");
+  l->AddEntry(muon,"Muon channel","pe");
   l->SetTextSize(0.03);
   l->Draw();
   c->SaveAs("/afs/desy.de/user/s/schwarzd/Plots/Unfolding/ChannelComparison.pdf");

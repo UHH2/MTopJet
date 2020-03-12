@@ -33,8 +33,8 @@ RecoHists_xcone::RecoHists_xcone(uhh2::Context & ctx, const std::string & dirnam
   SoftdropMass_Sel = book<TH1F>("SoftdropMass_Sel", "Soft Drop Mass [GeV]", 25, 0, 500);
   SoftdropMass_lep = book<TH1F>("SoftdropMass_lep", "m_{fat lep jet}", 25, 0, 500);
 
-  HadJetPT = book<TH1F>("pt_jet1", "p_{T}", 50, 0, 1000);
-  LepJetPT = book<TH1F>("pt_jet2", "p_{T}", 50, 0, 1000);
+  HadJetPT = book<TH1F>("pt_jet1", "p_{T}", 75, 0, 1500);
+  LepJetPT = book<TH1F>("pt_jet2", "p_{T}", 75, 0, 1500);
 
   RhoA_fat = book<TH1F>("RhoA_fat", "#rho A_{fat}", 50, 0, 100);
   RhoA = book<TH1F>("RhoA", "#rho A_{final}", 50, 0, 100);

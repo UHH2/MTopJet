@@ -467,7 +467,7 @@ bool MTopJetSelectionModule::process(uhh2::Event& event){
         if(isPhotonStream) passed_recsel = false;
         if(!trigger_el_A->passes(event))      passed_recsel = false;
         if(!elec_sel_triggerA->passes(event)) passed_recsel = false;
-        if(passed_recsel) elec_is_isolated = false;
+        if(passed_recsel) elec_is_isolated = true;
       }
       else{
         if(isMC){

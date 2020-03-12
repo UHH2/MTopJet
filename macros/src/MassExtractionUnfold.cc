@@ -104,8 +104,8 @@ int main(int argc, char* argv[]){
   masses_stat->GetXaxis()->SetLimits(xmin, xmax);
   masses_stat->GetHistogram()->SetMinimum(ymin);
   masses_stat->GetHistogram()->SetMaximum(ymax);
-  masses_stat->GetXaxis()->SetTitle("m_{t} truth [GeV]");
-  masses_stat->GetYaxis()->SetTitle("m_{t} measured [GeV]");
+  masses_stat->GetXaxis()->SetTitle("True #it{m}_{t} [GeV]");
+  masses_stat->GetYaxis()->SetTitle("Measured #it{m}_{t} [GeV]");
   masses_stat->GetYaxis()->SetTitleOffset(1.1);
   masses_stat->GetXaxis()->SetTitleOffset(0.9);
   masses_stat->GetYaxis()->SetTitleSize(0.05);
@@ -129,8 +129,8 @@ int main(int argc, char* argv[]){
   CMSSimLabel(true, 0.2, 0.85);
 
   TLegend *leg = new TLegend(0.5,0.15,0.88,0.38);
-  leg->AddEntry(masses_stat, "extracted m_{t} (stat only)", "pl");
-  leg->AddEntry(diag_line, "perfect measurement", "l");
+  leg->AddEntry(masses_stat, "Extracted #it{m}_{t} (stat only)", "pl");
+  leg->AddEntry(diag_line, "Perfect measurement", "l");
   // leg->AddEntry(fit3, "calibration fit", "l");
   // leg->AddEntry(Area, "fit uncertainty", "f");
   leg->Draw();
@@ -145,8 +145,8 @@ int main(int argc, char* argv[]){
   masses->GetXaxis()->SetLimits(xmin, xmax);
   masses->GetHistogram()->SetMinimum(ymin);
   masses->GetHistogram()->SetMaximum(ymax);
-  masses->GetXaxis()->SetTitle("m_{t} truth [GeV]");
-  masses->GetYaxis()->SetTitle("m_{t} measured [GeV]");
+  masses->GetXaxis()->SetTitle("True #it{m}_{t} [GeV]");
+  masses->GetYaxis()->SetTitle("Measured #it{m}_{t} [GeV]");
   masses->GetYaxis()->SetTitleOffset(1.1);
   masses->GetXaxis()->SetTitleOffset(0.9);
   masses->GetYaxis()->SetTitleSize(0.05);
@@ -169,8 +169,8 @@ int main(int argc, char* argv[]){
   CMSSimLabel(true, 0.2, 0.85);
 
   TLegend *leg2 = new TLegend(0.5,0.15,0.88,0.38);
-  leg2->AddEntry(masses, "extracted m_{t}^{MC}", "pl");
-  leg2->AddEntry(diag_line, "perfect measurement", "l");
+  leg2->AddEntry(masses, "Extracted #it{m}_{t}^{MC}", "pl");
+  leg2->AddEntry(diag_line, "Perfect measurement", "l");
   // leg->AddEntry(fit3, "calibration fit", "l");
   // leg->AddEntry(Area, "fit uncertainty", "f");
   leg2->Draw();

@@ -31,7 +31,8 @@ int main(int argc, char* argv[])
   std::vector<TFile*> MuIdVariations_f, MuTrVariations_f;
   std::vector<TFile*> ElIdVariations_f, ElTrVariations_f, ElRecoVariations_f;
   std::vector<TFile*> JECVariations_f, JERVariations_f, CORVariations_f;
-  std::vector<TFile*> GeneratorVariations_f, ISRVariations_f, FSRVariations_f, HdampVariations_f,PDFVariations_f;
+  std::vector<TFile*> ISRVariations_f, FSRVariations_f, HdampVariations_f,PDFVariations_f;
+  //std::vector<TFile*> GeneratorVariations_f;
 
   TString directory = dir;
   if(doelec) directory = dir_elec;
@@ -76,7 +77,7 @@ int main(int argc, char* argv[])
   JERVariations_f.push_back(new TFile(directory+"JER_down/uhh2.AnalysisModuleRunner.MC.TTbar.root"));
   CORVariations_f.push_back(new TFile(directory+"COR_up/uhh2.AnalysisModuleRunner.MC.TTbar.root"));
   CORVariations_f.push_back(new TFile(directory+"COR_down/uhh2.AnalysisModuleRunner.MC.TTbar.root"));
-  GeneratorVariations_f.push_back(new TFile(directory+"uhh2.AnalysisModuleRunner.MC.TTbar_amcatnlo-pythia.root"));
+  // GeneratorVariations_f.push_back(new TFile(directory+"uhh2.AnalysisModuleRunner.MC.TTbar_amcatnlo-pythia.root"));
   ISRVariations_f.push_back(new TFile(directory+"uhh2.AnalysisModuleRunner.MC.TTbar_isrup.root"));
   ISRVariations_f.push_back(new TFile(directory+"uhh2.AnalysisModuleRunner.MC.TTbar_isrdown.root"));
   FSRVariations_f.push_back(new TFile(directory+"uhh2.AnalysisModuleRunner.MC.TTbar_fsrup.root"));
@@ -98,6 +99,26 @@ int main(int argc, char* argv[])
   TString histname = "M_jet1_";
 
   if(argc > 2){
+    if(strcmp(argv[2], "noMass") == 0){
+      histdir = "XCone_cor_Sel_noMass/";
+      histname = "M_jet1_";
+      cout << "noMass" << endl;
+    }
+    if(strcmp(argv[2], "pt350") == 0){
+      histdir = "XCone_cor_Sel_pt350/";
+      histname = "M_jet1_";
+      cout << "pt350" << endl;
+    }
+    if(strcmp(argv[2], "pt") == 0){
+      histdir = "XCone_cor_SF/";
+      histname = "pt_jet1";
+      cout << "pt" << endl;
+    }
+    if(strcmp(argv[2], "eta") == 0){
+      histdir = "XCone_cor_SF/";
+      histname = "eta_jet1";
+      cout << "eta" << endl;
+    }
     if(strcmp(argv[2], "Wmass") == 0){
       histdir = "XCone_cor_subjets_SF/";
       histname = "min_mass_Wjet";
@@ -117,6 +138,11 @@ int main(int argc, char* argv[])
       histdir = "XCone_cor_subjets_SF/";
       histname = "pt_had_subjet3";
       cout << "sub3" << endl;
+    }
+    if(strcmp(argv[2], "subeta") == 0){
+      histdir = "XCone_cor_subjets_SF/";
+      histname = "eta_had_subjets";
+      cout << "eta subjets" << endl;
     }
   }
 
@@ -160,9 +186,9 @@ int main(int argc, char* argv[])
   for(unsigned int i=0; i<CORVariations_f.size(); i++){
     CORVariations.push_back((TH1F*)CORVariations_f[i]->Get(histdir + histname));
   }
-  for(unsigned int i=0; i<GeneratorVariations_f.size(); i++){
-    GeneratorVariations.push_back((TH1F*)GeneratorVariations_f[i]->Get(histdir + histname));
-  }
+  // for(unsigned int i=0; i<GeneratorVariations_f.size(); i++){
+  //   GeneratorVariations.push_back((TH1F*)GeneratorVariations_f[i]->Get(histdir + histname));
+  // }
   for(unsigned int i=0; i<ISRVariations_f.size(); i++){
     ISRVariations.push_back((TH1F*)ISRVariations_f[i]->Get(histdir + histname));
   }
@@ -339,17 +365,17 @@ int main(int argc, char* argv[])
   ErrorSym.push_back(CORErrorSym);
   CovMatrix.push_back(GetCovMatrix(CORErrorSym));
 
-  TH1F* GeneratorEnvelopeUp = GetEnvelopeUp(GeneratorVariations);
-  TH1F* GeneratorErrorUp = GetError(Central, GeneratorEnvelopeUp);
-  TH1F* GeneratorEnvelopeDown = GetEnvelopeDown(GeneratorVariations);
-  TH1F* GeneratorErrorDown = GetError(Central, GeneratorEnvelopeDown);
-  TH1F* GeneratorErrorSym = GetSymmetricError(GeneratorErrorUp, GeneratorErrorDown);
-  EnvelopeUp.push_back(GeneratorEnvelopeUp);
-  EnvelopeDown.push_back(GeneratorEnvelopeDown);
-  ErrorUp.push_back(GeneratorErrorUp);
-  ErrorDown.push_back(GeneratorErrorDown);
-  ErrorSym.push_back(GeneratorErrorSym);
-  CovMatrix.push_back(GetCovMatrix(GeneratorErrorSym));
+  // TH1F* GeneratorEnvelopeUp = GetEnvelopeUp(GeneratorVariations);
+  // TH1F* GeneratorErrorUp = GetError(Central, GeneratorEnvelopeUp);
+  // TH1F* GeneratorEnvelopeDown = GetEnvelopeDown(GeneratorVariations);
+  // TH1F* GeneratorErrorDown = GetError(Central, GeneratorEnvelopeDown);
+  // TH1F* GeneratorErrorSym = GetSymmetricError(GeneratorErrorUp, GeneratorErrorDown);
+  // EnvelopeUp.push_back(GeneratorEnvelopeUp);
+  // EnvelopeDown.push_back(GeneratorEnvelopeDown);
+  // ErrorUp.push_back(GeneratorErrorUp);
+  // ErrorDown.push_back(GeneratorErrorDown);
+  // ErrorSym.push_back(GeneratorErrorSym);
+  // CovMatrix.push_back(GetCovMatrix(GeneratorErrorSym));
 
   TH1F* ISREnvelopeUp = GetEnvelopeUp(ISRVariations);
   TH1F* ISRErrorUp = GetError(Central, ISREnvelopeUp);
@@ -454,7 +480,7 @@ int main(int argc, char* argv[])
   SysFiles.push_back(new TFile(directory+"SYS_JEC.root","RECREATE"));
   SysFiles.push_back(new TFile(directory+"SYS_JER.root","RECREATE"));
   SysFiles.push_back(new TFile(directory+"SYS_COR.root","RECREATE"));
-  SysFiles.push_back(new TFile(directory+"SYS_GENERATOR.root","RECREATE"));
+  // SysFiles.push_back(new TFile(directory+"SYS_GENERATOR.root","RECREATE"));
   SysFiles.push_back(new TFile(directory+"SYS_ISR.root","RECREATE"));
   SysFiles.push_back(new TFile(directory+"SYS_FSR.root","RECREATE"));
   SysFiles.push_back(new TFile(directory+"SYS_HDAMP.root","RECREATE"));

@@ -32,8 +32,8 @@ int main(int argc, char* argv[]){
 
   // this is for naming of pdf files
   TString mean_median;
-  if(use_median) mean_median = "median";
-  else           mean_median = "mean";
+  if(use_median) mean_median = "Median";
+  else           mean_median = "Mean";
 
   // now get plots from file
   vector<TH1F*> reso, reso_noJEC, reso_cor;
@@ -128,11 +128,11 @@ int main(int argc, char* argv[]){
   resolution->GetXaxis()->SetNdivisions(505);
   resolution->GetYaxis()->SetNdivisions(505);
   resolution->GetXaxis()->SetTitleSize(0.05);
-  resolution->GetYaxis()->SetTitleSize(0.04);
+  resolution->GetYaxis()->SetTitleSize(0.05);
   resolution->GetXaxis()->SetTitleOffset(0.9);
   resolution->GetYaxis()->SetTitleOffset(1.5);
-  resolution->GetXaxis()->SetTitle("p_{T}^{gen} [GeV]");
-  resolution->GetYaxis()->SetTitle(mean_median+" #left[ #frac{p_{T}^{rec} - p_{T}^{gen}}{p_{T}^{gen}} #right]");
+  resolution->GetXaxis()->SetTitle("#it{p}_{T}^{gen} [GeV]");
+  resolution->GetYaxis()->SetTitle(mean_median+" #left[ #frac{#it{p}_{T}^{rec} - #it{p}_{T}^{gen}}{#it{p}_{T}^{gen}} #right]");
   resolution->SetLineWidth(4);
   resolution->SetLineColor(kAzure+7);
   resolution_noJEC->SetLineWidth(4);
@@ -145,10 +145,10 @@ int main(int argc, char* argv[]){
   non_closure->GetXaxis()->SetNdivisions(505);
   non_closure->GetYaxis()->SetNdivisions(505);
   non_closure->GetXaxis()->SetTitleSize(0.05);
-  non_closure->GetYaxis()->SetTitleSize(0.04);
+  non_closure->GetYaxis()->SetTitleSize(0.05);
   non_closure->GetXaxis()->SetTitleOffset(0.9);
   non_closure->GetYaxis()->SetTitleOffset(1.5);
-  non_closure->GetXaxis()->SetTitle("p_{T}^{rec}");
+  non_closure->GetXaxis()->SetTitle("#it{p}_{T}^{rec}");
   non_closure->GetYaxis()->SetTitle("non-closure uncertainty [%]");
   non_closure->SetTitle(" ");
   non_closure->SetMarkerStyle(20);
@@ -159,7 +159,7 @@ int main(int argc, char* argv[]){
   // ---------------------------------------------------------------------------
 
   TCanvas *c1 = new TCanvas();
-  gPad->SetLeftMargin(0.15);
+  gPad->SetLeftMargin(0.17);
   gPad->SetBottomMargin(0.12);
   resolution->Draw("E1");
   zero_line->Draw("SAME");
@@ -185,7 +185,7 @@ int main(int argc, char* argv[]){
 
   TCanvas *c1b = new TCanvas();
   gPad->SetTopMargin(0.02);
-  gPad->SetLeftMargin(0.17);
+  gPad->SetLeftMargin(0.2);
   gPad->SetRightMargin(0.04);
   gPad->SetBottomMargin(0.13);
   TH1F* h_zoom = (TH1F*) resolution_cor->Clone();
@@ -193,13 +193,13 @@ int main(int argc, char* argv[]){
   h_zoom->GetXaxis()->SetNdivisions(505);
   h_zoom->GetYaxis()->SetNdivisions(505);
   h_zoom->GetXaxis()->SetTitleSize(0.06);
-  h_zoom->GetYaxis()->SetTitleSize(0.04);
+  h_zoom->GetYaxis()->SetTitleSize(0.05);
   h_zoom->GetXaxis()->SetTitleOffset(0.9);
   h_zoom->GetYaxis()->SetTitleOffset(1.7);
   h_zoom->GetXaxis()->SetLabelSize(0.05);
   h_zoom->GetYaxis()->SetLabelSize(0.05);
-  h_zoom->GetXaxis()->SetTitle("p_{T}^{gen} [GeV]");
-  h_zoom->GetYaxis()->SetTitle(mean_median+" #left[ #frac{p_{T}^{rec} - p_{T}^{gen}}{p_{T}^{gen}} #right]");
+  h_zoom->GetXaxis()->SetTitle("#it{p}_{T}^{gen} [GeV]");
+  h_zoom->GetYaxis()->SetTitle(mean_median+" #left[ #frac{#it{p}_{T}^{rec} - #it{p}_{T}^{gen}}{#it{p}_{T}^{gen}} #right]");
   uncertup->SetLineColor(13);
   uncertdown->SetLineColor(13);
   uncertup->SetFillColor(13);
@@ -209,7 +209,7 @@ int main(int argc, char* argv[]){
   uncertdown->Draw("HIST SAME");
   zero_line->Draw("SAME");
   h_zoom->Draw("SAME E1");
-  CMSSimLabel(true, 0.22, 0.93);
+  CMSSimLabel(true, 0.23, 0.93);
   TLegend *leg1b = new TLegend(0.5,0.74,0.75,0.95);
   leg1b->AddEntry(h_zoom,"t #rightarrow had in tW simulation","l");
   leg1b->AddEntry(uncertup,"XCone JES uncertainty","f");
@@ -241,7 +241,7 @@ int main(int argc, char* argv[]){
   zero_line->Draw("SAME");
   non_closure_percent->Draw("P SAME");
   TLegend *leg2 = new TLegend(0.45,0.85,0.80,0.65);
-  leg2->AddEntry(non_closure_percent, mean_median+" #left[ #frac{p_{T}^{rec} - p_{T}^{gen}}{p_{T}^{gen}} #right]","pl");
+  leg2->AddEntry(non_closure_percent, mean_median+" #left[ #frac{#it{p}_{T}^{rec} - #it{p}_{T}^{gen}}{#it{p}_{T}^{gen}} #right]","pl");
   leg2->AddEntry(area_percent, "non-closure", "f");
   leg2->Draw();
   gPad->RedrawAxis();

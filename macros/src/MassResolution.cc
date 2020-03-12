@@ -65,13 +65,13 @@ int main(int argc, char* argv[]){
   h_resos[0]->Draw("AP");
   h_resos[0]->GetXaxis()->SetRangeUser(405, 1495);
   h_resos[0]->GetYaxis()->SetRangeUser(0.0, 0.15);
-  h_resos[0]->GetXaxis()->SetTitle("p_{T, jet}^{gen} [GeV]");
+  h_resos[0]->GetXaxis()->SetTitle("#it{p}_{T, jet}^{gen} [GeV]");
   // h_resos[0]->GetYaxis()->SetTitle("RMS #left[ #frac{m_{jet}^{rec} - m_{jet}^{gen}}{m_{jet}^{gen}} #right]");
-  h_resos[0]->GetYaxis()->SetTitle("jet mass resolution");
+  h_resos[0]->GetYaxis()->SetTitle("Jet Mass Resolution");
   h_resos[0]->SetTitle(" ");
   h_resos[0]->GetXaxis()->SetNdivisions(505);
   h_resos[0]->GetYaxis()->SetNdivisions(505);
-  h_resos[0]->GetYaxis()->SetTitleOffset(1.4);
+  h_resos[0]->GetYaxis()->SetTitleOffset(1.6);
   h_resos[0]->GetXaxis()->SetTitleOffset(1.1);
   h_resos[0]->GetYaxis()->SetTitleSize(0.05);
   h_resos[0]->GetXaxis()->SetTitleSize(0.05);

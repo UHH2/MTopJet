@@ -171,7 +171,7 @@ int main(int argc, char* argv[]){
   p2->SetTopMargin(0.);
   p2->SetLeftMargin(0.15);
   p1->SetRightMargin(0.1);
-  p2->SetBottomMargin(0.15);
+  p2->SetBottomMargin(0.18);
   p2->SetBorderMode(0);
   p2->Draw();
 
@@ -182,7 +182,7 @@ int main(int argc, char* argv[]){
   mjetPU_data->GetXaxis()->SetRangeUser(0, 50);
   mjetPU_data->GetYaxis()->SetRangeUser(159, 196);
   mjetPU_data->GetXaxis()->SetTitle(" ");
-  mjetPU_data->GetYaxis()->SetTitle("<m_{jet}> [GeV]");
+  mjetPU_data->GetYaxis()->SetTitle("<#it{m}_{jet}> [GeV]");
   mjetPU_data->SetTitle(" ");
   mjetPU_data->GetXaxis()->SetNdivisions(505);
   mjetPU_data->GetYaxis()->SetNdivisions(505);
@@ -209,7 +209,7 @@ int main(int argc, char* argv[]){
   // mWPU_data->GetHistogram()->SetMaximum(85);
   mWPU_data->GetXaxis()->SetRangeUser(0, 50);
   mWPU_data->GetYaxis()->SetRangeUser(60, 97);
-  mWPU_data->GetXaxis()->SetTitle("number of primary vertices");
+  mWPU_data->GetXaxis()->SetTitle("Number of primary vertices");
   mWPU_data->GetYaxis()->SetTitle(" ");
   mWPU_data->SetTitle(" ");
   mWPU_data->GetXaxis()->SetNdivisions(505);
@@ -217,7 +217,7 @@ int main(int argc, char* argv[]){
   // mWPU_data->GetYaxis()->SetTitleOffset(1.1);
   mWPU_data->GetXaxis()->SetTitleOffset(0.8);
   // mWPU_data->GetYaxis()->SetTitleSize(0.05);
-  mWPU_data->GetXaxis()->SetTitleSize(0.09);
+  mWPU_data->GetXaxis()->SetTitleSize(0.1);
   mWPU_data->GetXaxis()->SetLabelSize(0.08);
   mWPU_data->GetYaxis()->SetLabelSize(0.08);
   mWPU_data->SetLineColor(14);
@@ -264,6 +264,16 @@ int main(int argc, char* argv[]){
   leg->AddEntry(mWPU_data,"W decay data","pe");
   leg->AddEntry(mWPU,"W decay t#bar{t}","pf");
   leg->Draw();
+
+  TString infotext = "35.9 fb^{-1} (13 TeV)";
+  TLatex *text1 = new TLatex(3.5, 24, infotext);
+  text1->SetNDC();
+  text1->SetTextAlign(33);
+  text1->SetTextFont(42);
+  text1->SetX(0.9);
+  text1->SetY(0.995);
+  text1->SetTextSize(0.04);
+  text1->Draw();
 
   TString filename = "/afs/desy.de/user/s/schwarzd/Plots/PileupVsMass/MjetVsPU.pdf";
   a->SaveAs(filename);

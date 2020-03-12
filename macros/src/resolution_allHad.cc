@@ -24,8 +24,8 @@ int main(int argc, char* argv[]){
 
   // this is for naming of pdf files
   TString mean_median;
-  if(use_median) mean_median = "median";
-  else           mean_median = "mean";
+  if(use_median) mean_median = "Median";
+  else           mean_median = "Mean";
 
   // now get plots from file
   vector<TH1F*> reso, reso_noJEC, reso_cor;
@@ -123,13 +123,13 @@ int main(int argc, char* argv[]){
   resolution->GetXaxis()->SetNdivisions(505);
   resolution->GetYaxis()->SetNdivisions(505);
   resolution->GetXaxis()->SetTitleSize(0.06);
-  resolution->GetYaxis()->SetTitleSize(0.04);
+  resolution->GetYaxis()->SetTitleSize(0.05);
   resolution->GetXaxis()->SetTitleOffset(0.9);
   resolution->GetYaxis()->SetTitleOffset(1.7);
   resolution->GetXaxis()->SetLabelSize(0.05);
   resolution->GetYaxis()->SetLabelSize(0.05);
-  resolution->GetXaxis()->SetTitle("p_{T,}^{gen} [GeV]");
-  resolution->GetYaxis()->SetTitle(mean_median+" #left[ #frac{p_{T}^{rec} - p_{T}^{gen}}{p_{T}^{gen}} #right]");
+  resolution->GetXaxis()->SetTitle("#it{p}_{T}^{gen} [GeV]");
+  resolution->GetYaxis()->SetTitle(mean_median+" #left[ #frac{#it{p}_{T}^{rec} - #it{p}_{T}^{gen}}{#it{p}_{T}^{gen}} #right]");
   resolution->SetLineWidth(4);
   resolution->SetLineColor(kAzure+7);
   resolution_noJEC->SetLineWidth(4);
@@ -142,11 +142,11 @@ int main(int argc, char* argv[]){
   resolution_jet1->GetXaxis()->SetNdivisions(505);
   resolution_jet1->GetYaxis()->SetNdivisions(505);
   resolution_jet1->GetXaxis()->SetTitleSize(0.06);
-  resolution_jet1->GetYaxis()->SetTitleSize(0.04);
+  resolution_jet1->GetYaxis()->SetTitleSize(0.05);
   resolution_jet1->GetXaxis()->SetTitleOffset(0.9);
   resolution_jet1->GetYaxis()->SetTitleOffset(1.7);
-  resolution_jet1->GetXaxis()->SetTitle("p_{T}^{gen} [GeV]");
-  resolution_jet1->GetYaxis()->SetTitle(mean_median+" #left[ #frac{p_{T}^{rec} - p_{T}^{gen}}{p_{T}^{gen}} #right]");
+  resolution_jet1->GetXaxis()->SetTitle("#it{p}_{T}^{gen} [GeV]");
+  resolution_jet1->GetYaxis()->SetTitle(mean_median+" #left[ #frac{#it{p}_{T}^{rec} - #it{p}_{T}^{gen}}{#it{p}_{T}^{gen}} #right]");
   resolution_jet1->SetLineWidth(4);
   resolution_jet2->SetLineWidth(4);
   resolution_jet3->SetLineWidth(4);
@@ -172,19 +172,19 @@ int main(int argc, char* argv[]){
 
   TCanvas *c1 = new TCanvas();
   gPad->SetTopMargin(0.02);
-  gPad->SetLeftMargin(0.17);
+  gPad->SetLeftMargin(0.2);
   gPad->SetRightMargin(0.04);
   gPad->SetBottomMargin(0.13);
   resolution->Draw("E1");
   zero_line->Draw("SAME");
   resolution->Draw("SAME E1");
   resolution_noJEC->Draw("SAME E1");
-  TLegend *leg1 = new TLegend(0.5,0.7,0.80,0.95);
+  TLegend *leg1 = new TLegend(0.49,0.7,0.79,0.95);
   leg1->AddEntry(resolution_noJEC,"no correction","le");
   leg1->AddEntry(resolution,"AK4 correction","le");
   leg1->SetTextSize(0.05);
   leg1->Draw();
-  CMSSimLabel(true, 0.22, 0.93);
+  CMSSimLabel(true, 0.23, 0.93);
   TLatex text1;
   text1.SetNDC(kTRUE);
   text1.SetTextFont(43);

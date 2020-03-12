@@ -177,12 +177,14 @@ protected:
   std::unique_ptr<Hists> h_XCone_cor_subjets, h_XCone_jec_subjets, h_XCone_raw_subjets;
   std::unique_ptr<Hists> h_XCone_cor_subjets_SF, h_XCone_jec_subjets_SF, h_XCone_raw_subjets_SF;
   std::unique_ptr<Hists> h_XCone_cor_Sel_noSel, h_XCone_cor_Sel_noMass, h_XCone_cor_Sel_nobtag, h_XCone_cor_Sel_pt350, h_XCone_cor_Sel_ptsub, h_XCone_cor_subjets_Sel_ptsub;
+  std::unique_ptr<Hists> h_XCone_cor_SF_Sel_pt350, h_XCone_cor_SF_Sel_noMass;
 
   std::unique_ptr<Hists> h_XCone_cor_m, h_XCone_cor_u, h_XCone_cor_m_fat, h_XCone_cor_u_fat;
 
   std::unique_ptr<Hists> h_XCone_cor_PUlow, h_XCone_cor_PUmid,h_XCone_cor_PUhigh;
   std::unique_ptr<Hists> h_XCone_cor_PUlow_subjets, h_XCone_cor_PUmid_subjets, h_XCone_cor_PUhigh_subjets;
 
+  std::unique_ptr<Hists> h_XCone_GEN_beforeMass, h_XCone_GEN_beforeMass_matched;
 
   std::unique_ptr<Hists> h_RecGenHists_lowPU, h_RecGenHists_medPU, h_RecGenHists_highPU, h_RecGenHists_lowPU_noJEC, h_RecGenHists_medPU_noJEC, h_RecGenHists_highPU_noJEC, h_RecGenHists_RecOnly_corr;
   std::unique_ptr<Hists> h_XCone_GEN_RecOnly, h_XCone_GEN_Both;
@@ -446,6 +448,7 @@ MTopJetPostSelectionModule::MTopJetPostSelectionModule(uhh2::Context& ctx){
   h_XCone_cor_migration_mass.reset(new RecoHists_xcone(ctx, "XCone_cor_migration_mass", "cor"));
   h_XCone_cor_migration_btag.reset(new RecoHists_xcone(ctx, "XCone_cor_migration_btag", "cor"));
 
+
   // Different REC Selection applied
   h_XCone_cor_Sel_noSel.reset(new RecoHists_xcone(ctx, "XCone_cor_Sel_noSel", "cor"));
   h_XCone_cor_Sel_noMass.reset(new RecoHists_xcone(ctx, "XCone_cor_Sel_noMass", "cor"));
@@ -453,6 +456,8 @@ MTopJetPostSelectionModule::MTopJetPostSelectionModule(uhh2::Context& ctx){
   h_XCone_cor_Sel_nobtag.reset(new RecoHists_xcone(ctx, "XCone_cor_Sel_nobtag", "cor"));
   h_XCone_cor_Sel_ptsub.reset(new RecoHists_xcone(ctx, "XCone_cor_Sel_ptsub", "cor"));
   h_XCone_cor_subjets_Sel_ptsub.reset(new SubjetHists_xcone(ctx, "h_XCone_cor_subjets_Sel_ptsub", "cor"));
+  h_XCone_cor_SF_Sel_noMass.reset(new RecoHists_xcone(ctx, "XCone_cor_SF_Sel_noMass", "cor"));
+  h_XCone_cor_SF_Sel_pt350.reset(new RecoHists_xcone(ctx, "XCone_cor_SF_Sel_pt350", "cor"));
 
   // PU dependence
   h_XCone_cor_PUlow.reset(new RecoHists_xcone(ctx, "XCone_cor_PUlow", "cor"));
@@ -531,6 +536,9 @@ MTopJetPostSelectionModule::MTopJetPostSelectionModule(uhh2::Context& ctx){
     h_XCone_GEN_Both.reset(new GenHists_xcone(ctx, "XCone_GEN_Both"));
 
     h_XCone_GEN_ST.reset(new GenHists_xcone(ctx, "XCone_GEN_ST"));
+
+    h_XCone_GEN_beforeMass.reset(new GenHists_xcone(ctx, "XCone_GEN_beforeMass"));
+    h_XCone_GEN_beforeMass_matched.reset(new GenHists_xcone(ctx, "XCone_GEN_beforeMass_matched"));
 
     h_GenParticles_GenOnly.reset(new GenHists_particles(ctx, "GenParticles_GenOnly"));
     h_GenParticles_RecOnly.reset(new GenHists_particles(ctx, "GenParticles_RecOnly"));
@@ -959,6 +967,10 @@ bool MTopJetPostSelectionModule::process(uhh2::Event& event){
   if(pass_massmigration_gen)  h_XCone_GEN_Sel_noMass->fill(event);
   if(pass_subptmigration_gen) h_XCone_GEN_Sel_ptsub->fill(event);
 
+  if(pass_measurement_gen || pass_massmigration_gen){
+    h_XCone_GEN_beforeMass->fill(event);
+    if(matched_sub_GEN->passes(event)) h_XCone_GEN_beforeMass_matched->fill(event);
+  }
 
   if(pass_WJets_sel && isMC){
     h_CorrectionHists_WJets->fill(event);
